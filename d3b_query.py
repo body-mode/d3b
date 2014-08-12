@@ -14,7 +14,7 @@ from dict import *
 class dnd_query():
 	
 	def __init__(self, q_table):
-		self.conn = sqlite3.connect('dnd.sqlite')
+		self.conn = sqlite3.connect('c:/GitHub/d3b/dnd.sqlite')
 		self.c = self.conn.cursor()
 		self.conn.text_factory = str
 		self.q_table = q_table
@@ -38,7 +38,7 @@ class dnd_query():
 		self.q_str = ""
 
 		self.filt_result = []
-
+		
 	def init_filter(self, **f_param):
 		self.filter_input =  f_param
 		for i, k in f_param.items():
@@ -124,8 +124,12 @@ class dnd_query():
 		self.q_str = '  '.join([self.select_query, self.join_query, self.where_query, self.sortby_query])
 		print self.q_str
 		self.query_result = self.c.execute(self.q_str).fetchall()
+		self.q_result_dict = {}
 		for i in self.query_result:
-			print i
+#			print i
+			self.q_result_dict.update({i[0] : i[1:]})
+#		for j, k in self.q_result_dict.items():
+#			print j, k
 #			self.join_str = []
 #			self.where_str = {}
 #			self.sortby_str = []
@@ -422,9 +426,14 @@ class dnd_query():
 #### EXAMPLE ####
 
 
-myquery = dnd_query('dnd_spell')
-myquery.init_filter(**{'class': '2'}) #FILTERS SPELLS TO CLERIC CLASS
-myquery.init_sortby(**{'classlevel' : 0, 'rulebook_id' : 1}) #HIERARCHICALLY ORDER BY CLASS LEVEL, THEN RULEBOOK ID
-myquery.submit_query()
 
 #myquery.init_filter(**{'rulebook_id' : '6', 'class': '2'})
+
+
+#### EXAMPLE 2 ####
+
+#myquery = dnd_query('dnd_spell')
+#myquery.init_filter(**{'class': '2'}) #FILTERS SPELLS TO CLERIC CLASS
+#myquery.init_sortby(**{'classlevel' : 0, 'rulebook_id' : 1}) #HIERARCHICALLY ORDER BY CLASS LEVEL, THEN RULEBOOK ID
+#myquery.submit_query()
+
