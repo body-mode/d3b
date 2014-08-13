@@ -127,7 +127,7 @@ class dnd_query():
 		self.q_result_dict = {}
 		for i in self.query_result:
 #			print i
-			self.q_result_dict.update({i[0] : i[1:]})
+			self.q_result_dict.update({i[0] : i[:]})
 #		for j, k in self.q_result_dict.items():
 #			print j, k
 #			self.join_str = []
