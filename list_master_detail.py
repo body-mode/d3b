@@ -23,9 +23,10 @@ class MasterDetailView(GridLayout):
         super(MasterDetailView, self).__init__(**kwargs)
 
         list_item_args_converter = \
-                lambda row_index, rec: {'text': rec[0],
+                lambda row_index, rec: {'text': rec[1],
                                         'size_hint_y': None,
-                                        'height': 25}
+                                        'height': 25,
+										'id' : str(rec[0])}
 
         dict_adapter = DictAdapter(sorted_keys=[i[0] for i in myquery.query_result],
                                    data=myquery.q_result_dict,
@@ -40,8 +41,10 @@ class MasterDetailView(GridLayout):
         self.add_widget(master_list_view)
 
         detail_view = PageDetailView(
-                page_id=dict_adapter.selection[0].text,
-                size_hint=(.7, 1.0))
+                page_txt=dict_adapter.selection[0].text,
+				page_id=dict_adapter.selection[0].id,
+                size_hint=(.7, 1.0),
+				tname=myquery.q_table)
 
         dict_adapter.bind(on_selection_change=detail_view.page_changed)
         self.add_widget(detail_view)
